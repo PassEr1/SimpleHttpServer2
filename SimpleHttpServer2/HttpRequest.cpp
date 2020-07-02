@@ -1,5 +1,5 @@
 #include "HttpRequest.h"
-#include "HttpResponse.h"
+
 
 const unsigned int HttpRequest::_defult_size_for_message = 2048 ;
 
@@ -26,13 +26,13 @@ CHUNKS_DATA HttpRequest::get_chunks(const BytesBufferPtr data_buffer)
     CHUNKS_DATA::HttpDataChunkArray chunks;
     unsigned long number_of_chunks = calculate_num_of_chunks(data_buffer);
     unsigned long size_of_last_chunk = data_buffer->size() % HttpRequest::_defult_size_for_message;
-    char* p_to_next_chunk = data_buffer->data();
+    char* offset_next_chunk = data_buffer->data();
 
-    for (size_t i = 0; i < number_of_chunks; i++, p_to_next_chunk += HttpRequest::_defult_size_for_message)
+    for (size_t i = 0; i < number_of_chunks; i++, offset_next_chunk += HttpRequest::_defult_size_for_message)
     {
         HTTP_DATA_CHUNK new_data_chunk;
         new_data_chunk.DataChunkType = HttpDataChunkFromMemory;
-        new_data_chunk.FromMemory.pBuffer = (PVOID)p_to_next_chunk;
+        new_data_chunk.FromMemory.pBuffer = (PVOID)offset_next_chunk;
         new_data_chunk.FromMemory.BufferLength = HttpRequest::_defult_size_for_message;
         chunks.push_back(new_data_chunk);
 
@@ -45,7 +45,7 @@ CHUNKS_DATA HttpRequest::get_chunks(const BytesBufferPtr data_buffer)
         number_of_chunks };
 }
 
-static HttpResponseBuilder build_response(CHUNKS_DATA chunks_data)
+HttpResponseBuilder HttpRequest::build_response(CHUNKS_DATA chunks_data)
 {
     HttpResponseBuilder response_builder(200, "ok");
     response_builder
@@ -65,10 +65,8 @@ void HttpRequest::response(BytesBufferPtr data_to_send)
     static const PHTTP_CACHE_POLICY NO_CACH_POLICY = NULL;
     static const LPOVERLAPPED NO_OVERLLAPED = NULL;
 
-
     PHTTP_REQUEST pReferenceRequest = reinterpret_cast<PHTTP_REQUEST>(_pmessage_buffer->data());
     DWORD bytesSent;
-
     CHUNKS_DATA chunks_data = get_chunks(data_to_send);
     HttpResponseBuilder reponse_builder = build_response(chunks_data);
     

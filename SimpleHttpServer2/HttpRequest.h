@@ -17,6 +17,7 @@
 #include "PathReader.h"
 #include "BytesBuffer.h"
 #include "HttpMessageChunks.h"
+#include "HttpResponse.h"
 
 /*
 this class essentially holds context of the request,
@@ -43,6 +44,7 @@ public:
 
 private:
 	static CHUNKS_DATA get_chunks(const BytesBufferPtr data_buffer);
+	static HttpResponseBuilder build_response(CHUNKS_DATA chunks_data);
 	static unsigned long calculate_num_of_chunks(const BytesBufferPtr data_buffer);
 
 private:
