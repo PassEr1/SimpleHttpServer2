@@ -68,10 +68,6 @@ FileReader::BufferPtr PathReader::directory_handle() const
 	return wstring_to_pbuffer(builded_result);
 }
 
-//std::wstring read_as_wstring(FileReader::BufferPtr buffer)//const
-//{
-//	std::wstring buffer_as_string(buffer->begin(), buffer->end());
-//}
 
 FileReader::BufferPtr PathReader::read_now() const
 {

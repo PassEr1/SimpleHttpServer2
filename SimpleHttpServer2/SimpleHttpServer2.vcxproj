@@ -153,16 +153,17 @@
   <ItemGroup>
     <ClCompile Include="..\..\SimpleHttpServer\SimpleHttpServer\DirectoryIterator.cpp" />
     <ClCompile Include="..\..\SimpleHttpServer\SimpleHttpServer\FileReader.cpp" />
-    <ClCompile Include="..\..\SimpleHttpServer\SimpleHttpServer\PathReader.cpp" />
     <ClCompile Include="..\..\SimpleHttpServer\SimpleHttpServer\SmartHandleHolder.cpp" />
     <ClCompile Include="..\..\SimpleHttpServer\SimpleHttpServer\Utils.cpp" />
+    <ClCompile Include="..\SimpleHttpServer\PathReader.cpp" />
     <ClCompile Include="HttpRequest.cpp" />
     <ClCompile Include="HttpResponse.cpp" />
     <ClCompile Include="SimpleHttpServer.cpp" />
     <ClCompile Include="SimpleHttpServer2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\SimpleHttpServer\SimpleHttpServer\PathReader.h" />
+    <ClInclude Include="..\SimpleHttpServer\FileReader.h" />
+    <ClInclude Include="..\SimpleHttpServer\PathReader.h" />
     <ClInclude Include="BytesBuffer.h" />
     <ClInclude Include="HttpExternalCode.h" />
     <ClInclude Include="HttpMessageChunks.h" />
