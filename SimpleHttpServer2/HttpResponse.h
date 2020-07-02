@@ -23,9 +23,9 @@ class HttpResponseBuilder
 public:
 	explicit HttpResponseBuilder(unsigned long status_code, const char message_code[]);
 	HttpResponseBuilder(const HttpResponseBuilder& other) = default;
+	HttpResponseBuilder(HttpResponseBuilder&& other) = default;
 
 public:
-	HttpResponseBuilder(HttpResponseBuilder&& other) = delete;
 	HttpResponseBuilder& operator=(HttpResponseBuilder&& other) = delete;
 	HttpResponseBuilder& operator=(const HttpResponseBuilder& other) = delete;
 

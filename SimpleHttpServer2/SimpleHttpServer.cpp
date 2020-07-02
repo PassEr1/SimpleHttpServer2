@@ -21,6 +21,7 @@ SimpleHttpServer::~SimpleHttpServer()
 HttpRequest SimpleHttpServer::recv_new_request()
 {
     static const HTTP_REQUEST_ID NO_REQUEST_ID = NULL;
+    static const LPOVERLAPPED NO_OVERLAPPED = NULL;
     ULONG result;
     ULONG bytes_read;
     BytesBuffer buffer(sizeof(HTTP_REQUEST) + _defult_size_for_message);
@@ -35,7 +36,7 @@ HttpRequest SimpleHttpServer::recv_new_request()
         prequest_buffer,
         p_to_buffer->size(),
         &bytes_read,
-        NULL
+        NO_OVERLAPPED
     );
 
     THROW_IF_NOT(result == NO_ERROR);
