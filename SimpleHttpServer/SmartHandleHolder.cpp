@@ -7,6 +7,7 @@ SmartHandleHolder::SmartHandleHolder(HANDLE handle)
 
 SmartHandleHolder::~SmartHandleHolder()
 {
+	// CR: always put new line before {
 	try { 
 		CloseHandle(_handle);
 	}

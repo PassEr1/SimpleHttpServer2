@@ -8,10 +8,11 @@ class DirectoryIterator
 {
 
 public:
+	// CR: make explicit
 	DirectoryIterator(const std::wstring& path);
 	~DirectoryIterator();
 
-	bool has_next()const;
+	bool has_next() const;
 	std::wstring get_next();
 
 public:
@@ -26,6 +27,7 @@ private:
 				  And this is because we have to "know" the first file by calling the function "FindFirst" of win api.
 				  why do you think this shoul be static though?
 	*/
+	// CR: For coder, your right, you can make this not static
 	static HANDLE get_find_handle(const std::wstring& path, PWIN32_FIND_DATAW first_file_found_ptr); 
 
 

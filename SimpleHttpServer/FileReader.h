@@ -11,12 +11,14 @@ class FileReader
 {
 public:
 	enum class PathAttribute { Directory, File, None };
+	// CR: duplicate, you have ByteBuffer.h
 	using Buffer = std::vector<char>;
 	using BufferPtr = std::shared_ptr<Buffer>;
 
 
 public:
-	FileReader(const std::wstring file_path, DWORD share_mode, DWORD creation_disposition); // CR: const reference
+	// CR: const reference
+	FileReader(const std::wstring file_path, DWORD share_mode, DWORD creation_disposition); 
 	~FileReader();
 
 public:
@@ -30,6 +32,7 @@ public:
 	FileReader& operator=(FileReader& other) = delete;
 
 private:
+	// CR: typo, handle
 	static HANDLE get_file_handler(const std::wstring& file_path, DWORD share_mode, DWORD creation_disposition);
 
 };

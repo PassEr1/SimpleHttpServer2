@@ -52,8 +52,12 @@ FileReader::BufferPtr PathReader::buffer_char_to_wchar(const FileReader::BufferP
 
 FileReader::BufferPtr PathReader::file_handle() const
 {
+	// CR: this static const is unused...
 	static const LPOVERLAPPED DONT_USE_OVERLLAPED = NULL;
 	FileReader file_reader(_abs_path, FILE_SHARE_READ, OPEN_EXISTING);
+	// CR: why not read the whole file size? for this i would add a get_size() function 
+	// to file reader, and also a read() function that receives no arguments and reads 
+	// the whole file
 	FileReader::BufferPtr p_buffer = file_reader.read(DEFAULT_READ_SIZE_BYTES);
 	return p_buffer; //buffer_char_to_wchar(p_buffer);
 }
@@ -63,6 +67,7 @@ FileReader::BufferPtr PathReader::wstring_to_pbuffer(std::wstring wstr)
 {
 	unsigned int size_of_buffer_in_bytes = wstr.size() * sizeof(WCHAR);
 	FileReader::Buffer buffer(size_of_buffer_in_bytes);
+	// CR: prefer memcpy rather than CopyMemory. Not sure why.. maybe portability? even though previously i told you not to be portable :)
 	CopyMemory(buffer.data(), wstr.data(), size_of_buffer_in_bytes);
 
 	return std::make_shared<FileReader::Buffer>(buffer);
@@ -70,6 +75,8 @@ FileReader::BufferPtr PathReader::wstring_to_pbuffer(std::wstring wstr)
 
 FileReader::BufferPtr PathReader::directory_handle() const
 {
+	// CR: lots of unused variables here...
+	// CR: change the project settings to warning level 4 and treat warnings as errors... VisualStudio is supposed to tell you when you have unused variables
 	static unsigned int SIZE_OF_NEW_LINE_CHARACTER = 2;
 	static const std::wstring NEW_LINE_CHARACTER(L"\n");
 	unsigned int total_bytes_read = 0;

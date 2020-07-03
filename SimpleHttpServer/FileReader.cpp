@@ -3,11 +3,12 @@
 
 HANDLE FileReader::get_file_handler(const std::wstring& file_path, DWORD share_mode, DWORD creation_disposition)
 {
+	// CR: no magic variables! static const for the security attributes and template file
 	HANDLE hfile = CreateFileW(
 		file_path.c_str(),
 		GENERIC_READ,
 		share_mode,
-		NULL,
+		NULL, 
 		creation_disposition,
 		FILE_ATTRIBUTE_NORMAL,
 		NULL
@@ -50,6 +51,7 @@ FileReader::BufferPtr FileReader::read(size_t size) const
 FileReader::PathAttribute FileReader::get_path_attribute(const std::wstring& path)
 {
 	DWORD attribute_identifer = GetFileAttributesW(path.c_str());
+	// CR: Unneeded, is yoda notation
 	if (INVALID_FILE_ATTRIBUTES == attribute_identifer)
 	{
 		return PathAttribute::None; 
