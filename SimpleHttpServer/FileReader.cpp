@@ -13,7 +13,8 @@ HANDLE FileReader::get_file_handler(const std::wstring& file_path, DWORD share_m
 		NULL
 	);
 
-	// CR: what about checking for errors...
+	THROW_IF_NOT(hfile != INVALID_HANDLE_VALUE);
+
 	return hfile;
 }
 
