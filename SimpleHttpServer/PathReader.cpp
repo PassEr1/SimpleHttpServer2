@@ -31,11 +31,31 @@ FileReader::BufferPtr PathReader::defult_handler() const
 	return std::make_shared<FileReader::Buffer>(_default_empty_data);
 }
 
+FileReader::BufferPtr PathReader::buffer_char_to_wchar(const FileReader::BufferPtr& p_buffer)
+{
+	unsigned long size_of_orignal_data = p_buffer->size() * sizeof(WCHAR);
+	FileReader::Buffer new_buffer(size_of_orignal_data);
+
+	int status = MultiByteToWideChar(
+		CP_ACP,
+		MB_PRECOMPOSED,
+		p_buffer->data(),
+		p_buffer->size(),
+		reinterpret_cast<LPWSTR>(new_buffer.data()),
+		p_buffer->size() * sizeof(WCHAR)
+	);
+	
+	THROW_IF_NOT(status != 0);
+
+	return std::make_shared<FileReader::Buffer>(new_buffer);
+}
+
 FileReader::BufferPtr PathReader::file_handle() const
 {
 	static const LPOVERLAPPED DONT_USE_OVERLLAPED = NULL;
 	FileReader file_reader(_abs_path, FILE_SHARE_READ, OPEN_EXISTING);
-	return file_reader.read(DEFAULT_READ_SIZE_BYTES);
+	FileReader::BufferPtr p_buffer = file_reader.read(DEFAULT_READ_SIZE_BYTES);
+	return p_buffer; //buffer_char_to_wchar(p_buffer);
 }
 
 

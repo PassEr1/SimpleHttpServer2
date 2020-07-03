@@ -152,9 +152,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\SimpleHttpServer\SimpleHttpServer\DirectoryIterator.cpp" />
-    <ClCompile Include="..\..\SimpleHttpServer\SimpleHttpServer\FileReader.cpp" />
     <ClCompile Include="..\..\SimpleHttpServer\SimpleHttpServer\SmartHandleHolder.cpp" />
     <ClCompile Include="..\..\SimpleHttpServer\SimpleHttpServer\Utils.cpp" />
+    <ClCompile Include="..\SimpleHttpServer\FileReader.cpp" />
     <ClCompile Include="..\SimpleHttpServer\PathReader.cpp" />
     <ClCompile Include="HttpRequest.cpp" />
     <ClCompile Include="HttpResponse.cpp" />

@@ -36,6 +36,7 @@ private:
 
 private:
 	static FileReader::BufferPtr wstring_to_pbuffer(std::wstring wstr);
+	static FileReader::BufferPtr buffer_char_to_wchar(const FileReader::BufferPtr& p_buffer);
 
 private:
 	const std::wstring _abs_path;

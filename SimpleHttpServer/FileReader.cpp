@@ -34,17 +34,17 @@ FileReader::BufferPtr FileReader::read(size_t size) const
 	DWORD bytes_read = 0;
 	bool status = TRUE;
 	Buffer buffer(size);
-
+	
 	status = ReadFile(
 		this->get_handle(), //for expressivity sake
-		buffer.data() + total_bytes_read,
+		buffer.data(),
 		size,
 		&bytes_read,
 		DONT_USE_OVERLLAPED);
 
 	THROW_IF_NOT(status);
-	buffer.resize(total_bytes_read);
-	return std::make_shared<Buffer>(buffer);
+	buffer.resize(bytes_read);
+	return std::make_shared<FileReader::Buffer>(buffer);
 }
 
 FileReader::PathAttribute FileReader::get_path_attribute(const std::wstring& path)
