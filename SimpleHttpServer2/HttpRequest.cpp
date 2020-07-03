@@ -19,6 +19,8 @@ unsigned long HttpRequest::calculate_num_of_chunks(const BytesBufferPtr data_buf
     return ceil((double)data_buffer->size() / HttpRequest::_defult_size_for_message); //round up
 }
 
+// CR: I think that if you moved the responsibility of making chunks and stuff into HttpResponse,
+// you wont need the HttpMessageChunks struct and the code will be encapsulated better
 CHUNKS_DATA HttpRequest::get_chunks(const BytesBufferPtr data_buffer)
 {
     THROW_IF_NOT(data_buffer->size() != 0);

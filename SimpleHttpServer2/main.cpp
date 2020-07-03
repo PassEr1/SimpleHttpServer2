@@ -9,7 +9,6 @@ void ConsoleLogger(const std::wstring& szMessage)
 }
 
 // CR: nice and clean. good job
-// CR: bad file naming. main.cpp is fine
 // CR: try to add support for the path as a command line argument, and if no argument is given, the current directory
 int main()
 {

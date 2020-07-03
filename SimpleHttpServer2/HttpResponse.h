@@ -32,6 +32,7 @@ public:
 public:
 	HttpResponseBuilder& config_header(HTTP_HEADER_ID, const char raw_value[]);
 	void set_chunks(const CHUNKS_DATA& chunks_data);
+	// CR: I dont like the fact that you are returning a pointer to an internal member of the class. Occasionaly its ok to just copy it!
 	HTTP_RESPONSE* get();
 
 private:

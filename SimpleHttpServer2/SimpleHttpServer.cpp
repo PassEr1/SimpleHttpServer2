@@ -20,6 +20,7 @@ SimpleHttpServer::~SimpleHttpServer()
 
 HttpRequest SimpleHttpServer::recv_new_request()
 {
+    // CR: I would move the api calls to the httprequest class
     static const HTTP_REQUEST_ID NO_REQUEST_ID = NULL;
     static const LPOVERLAPPED NO_OVERLAPPED = NULL;
     ULONG result;
@@ -44,6 +45,7 @@ HttpRequest SimpleHttpServer::recv_new_request()
     return HttpRequest(p_to_buffer, _h_requests_queue_handle.get_handle());
 }
 
+// CR: this function looks great!
 void SimpleHttpServer::start()
 {
     while (TRUE)
@@ -69,11 +71,15 @@ void SimpleHttpServer::log_initializtion_finished(const std::wstring& full_domai
     _plogger_function(L"[INFO] Listening on: " + full_domain_name);
 }
 
+// CR: typo... queue, and probably http_queue is more clear
 HANDLE SimpleHttpServer::get_quque_handle()
 {
     ULONG RESERVED = 0;
     HANDLE quque_handle;
 
+    // CR: For every call to HttpInitialize, HttpTerminate needs to be called. Make this a class / singleton!
+    // CR: static const for the third variable...
+    // CR: variable naming conventions
     //initialize service
     ULONG retCode = HttpInitialize(
         HTTPAPI_VERSION_1,
@@ -96,6 +102,8 @@ void SimpleHttpServer::_register_url(const std::wstring url_to_listen, HANDLE h_
 {
     static const PVOID RESERVED = NULL;
 
+    // CR: every HttpAddUrl needs to be cleaned up with HttpRemoveUrl.
+    // This means... another class! 
     ULONG retCode = HttpAddUrl(
         h_requests_queue_handle,
         url_to_listen.c_str(),
@@ -107,6 +115,7 @@ void SimpleHttpServer::_register_url(const std::wstring url_to_listen, HANDLE h_
 
 std::wstring SimpleHttpServer::reformat_domain_name(const std::wstring& domain_name, const std::wstring& port_number)
 {
+    // CR: once you have a StringUtils::format function, you should use it here
     static const std::wstring DOTS(L":");
     static const std::wstring  SLASH(L"/");
     return domain_name + DOTS + port_number + SLASH;
@@ -115,6 +124,7 @@ std::wstring SimpleHttpServer::reformat_domain_name(const std::wstring& domain_n
 
 void SimpleHttpServer::wrap_buffer_with_html(BytesBufferPtr data_to_render)
 {
+    // CR: not sure how this works.. because wchar is not utf-8. Also, when returning file data you want to return the data as a download. 
     const char html_tempalte_start[] = "<html><head><meta charset=\"utf-8\"/><pre>";
     const char html_tempalte_end[] = "</pre></head> </html>";
     data_to_render->insert(data_to_render->begin(), html_tempalte_start, html_tempalte_start + sizeof(html_tempalte_start) - 1);

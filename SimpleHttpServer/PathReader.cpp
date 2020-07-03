@@ -86,6 +86,8 @@ FileReader::BufferPtr PathReader::directory_handle() const
 	DirectoryIterator iterator(_abs_path);
 	std::wstring builded_result;
 
+	// CR: extra credit: return an html file where every file is a link so that you can navigate like in the real SimpleHTTPServer
+	// not sure how easy it will be with the HttpApi and url registering...
 	while (iterator.has_next())
 	{
 		std::wstring file_name = iterator.get_next();

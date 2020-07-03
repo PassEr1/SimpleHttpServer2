@@ -36,6 +36,7 @@ public:
 	SimpleHttpServer& operator=(SimpleHttpServer&& other) = delete;
 
 private:
+	// CR: conventions, const ref, if you need to pass the handle, make it a member function
 	static void _register_url(const std::wstring url_to_listen, HANDLE h_requests_queue_handle);
 	static std::wstring reformat_domain_name(const std::wstring& domain_name, const std::wstring& port_number);
 	static void wrap_buffer_with_html(BytesBufferPtr data_to_render);
@@ -49,10 +50,12 @@ private:
 
 
 private:
-	SmartHandleHolder _h_requests_queue_handle;
+	// CR: like I said in the SmartHandleHolder comment, this class is for inheritance and not composition. It will also remove the need for the public get_handle function
+	SmartHandleHolder _h_requests_queue_handle; 
 	const fpLogger _plogger_function;
 	const std::wstring _server_root_path;
 
 private:
+	// CR: typo
 	static const unsigned int _defult_size_for_message; // we need this becuase since we allocate buffer to receive messages
 };
