@@ -5,26 +5,50 @@
 #include <string>
 #include <exception>
 
-// CR: This is extra credit, but you can work on this if you have time
-// In most projects there is a Debug.hpp that contains useful utilities such as:
-// 1. A debug logging function, that prints in debug and does nothing in release, using IFDEFS
-// 		- This function uses macros to print the function, line number
-// 		- This function usually uses some sort of std::wstring StringUtils::format(const std::wstring& format, ...) function that needs to be implemented
-// 		- The logging is done using OutputDebugStringW and read from dbgview / visual studio (in you case cout is also ok)
-// 2. THROW / CHECK macros, that also print so you know what line number / function threw the exception. Also they print the condition that failed
-// 3. Exception heirarchy that has at least a general Exception, and a Win32Exception that you throw when a winapi function fails and also saves the GetLastError()
+class Win32Exception;
+
+#define STRING(s) (#s);
+	
 #define THROW_IF_NOT(condition)\
 {\
 	if(!(condition))\
 	{\
-		throw std::exception();\
+		std::string cstr = STRING( #condition)\
+		throw std::exception(cstr.c_str());\
 	}\
 }\
 
-// CR: remove unused code!!!
-size_t fnGetWStringLength(PCWSTR szString, size_t maxSize);
 
-size_t fnGetWStringSize(PCWSTR szString, size_t maxSize);
+#define WIN32_THROW_IF_NOT(condition)\
+{\
+	if(!(condition))\
+	{\
+		std::string cstr = STRING( #condition)\
+		throw Win32Exception(cstr.c_str());\
+	}\
+}\
+
+class Win32Exception
+	:public std::exception
+{
+public:
+	Win32Exception(std::string what_happened)
+		:std::exception(("Win32Exception- " + what_happened).c_str())
+	{
+	}
+
+};
+
+template<typename... Args>
+std::wstring foramate_string(const std::wstring& format, const Args&... args)
+{
+	static const unsigned int _DEBUG_MESSAGE_DEFAULT_SIZE = 1000;
+	std::wstring formatted(_DEBUG_MESSAGE_DEFAULT_SIZE, '\0');
+	wsprintf((LPWSTR)formatted.data(), format.data(), args...);
+	return formatted;
+
+}
+
 
 LPVOID fnAllocate(SIZE_T cbBytes);
 

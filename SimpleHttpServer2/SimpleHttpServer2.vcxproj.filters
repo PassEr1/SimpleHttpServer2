@@ -68,5 +68,8 @@
     <ClInclude Include="..\SimpleHttpServer\FileReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Debug.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

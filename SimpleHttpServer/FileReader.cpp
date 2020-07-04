@@ -14,7 +14,7 @@ HANDLE FileReader::get_file_handler(const std::wstring& file_path, DWORD share_m
 		NULL
 	);
 
-	THROW_IF_NOT(hfile != INVALID_HANDLE_VALUE);
+	WIN32_THROW_IF_NOT(hfile != INVALID_HANDLE_VALUE);
 
 	return hfile;
 }
