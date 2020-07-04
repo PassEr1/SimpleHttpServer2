@@ -159,7 +159,7 @@
     <ClCompile Include="HttpRequest.cpp" />
     <ClCompile Include="HttpResponse.cpp" />
     <ClCompile Include="SimpleHttpServer.cpp" />
-    <ClCompile Include="SimpleHttpServer2.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\SimpleHttpServer\FileReader.h" />
