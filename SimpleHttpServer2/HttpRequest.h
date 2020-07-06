@@ -44,7 +44,7 @@ public:
 
 private:
 	static CHUNKS_DATA get_chunks(const BytesBufferPtr data_buffer);
-	static HttpResponseBuilder build_response(CHUNKS_DATA chunks_data);
+	static HttpResponseBuilder build_response(BytesBufferPtr data_puffer_ptr);
 	static unsigned long calculate_num_of_chunks(const BytesBufferPtr data_buffer);
 
 private:

@@ -18,9 +18,6 @@
     <ClCompile Include="..\..\SimpleHttpServer\SimpleHttpServer\DirectoryIterator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\SimpleHttpServer\SimpleHttpServer\SmartHandleHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\SimpleHttpServer\SimpleHttpServer\Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -42,15 +39,15 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\SimpleHttpServer\SmartHandleHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimpleHttpServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HttpRequest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BytesBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HttpMessageChunks.h">
@@ -69,6 +66,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Debug.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SimpleHttpServer\SmartHandleHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BytesBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

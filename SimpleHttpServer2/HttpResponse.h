@@ -16,7 +16,7 @@
 #include <http.h>
 #include <stdio.h>
 #include <string>
-#include "HttpMessageChunks.h"
+#include "BytesBuffer.h"
 
 class HttpResponseBuilder
 {
@@ -31,10 +31,22 @@ public:
 
 public:
 	HttpResponseBuilder& config_header(HTTP_HEADER_ID, const char raw_value[]);
-	void set_chunks(const CHUNKS_DATA& chunks_data);
+	void set_chunks(const BytesBufferPtr data_buffer);
+	//void set_chunks(const CHUNKS_DATA& chunks_data);
 	// CR: I dont like the fact that you are returning a pointer to an internal member of the class. Occasionaly its ok to just copy it!
 	HTTP_RESPONSE* get();
 
 private:
+	using HttpResponsePtr = std::shared_ptr<HTTP_RESPONSE>;
+	using HttpDataChunkArray = std::vector<HTTP_DATA_CHUNK>;
+
+private:
+	static unsigned long calculate_num_of_chunks(const BytesBufferPtr data_buffer);
+
+private:
 	HTTP_RESPONSE _response;
+	HttpDataChunkArray _chunks_array;
+
+private:
+	static const unsigned int _defult_size_for_message;
 };

@@ -47,14 +47,14 @@ CHUNKS_DATA HttpRequest::get_chunks(const BytesBufferPtr data_buffer)
         number_of_chunks };
 }
 
-HttpResponseBuilder HttpRequest::build_response(CHUNKS_DATA chunks_data)
+HttpResponseBuilder HttpRequest::build_response(BytesBufferPtr data_puffer_ptr)
 {
     HttpResponseBuilder response_builder(200, "ok");
     response_builder
         .config_header(HttpHeaderContentType, "text/html")
         .config_header(HttpHeaderAcceptEncoding, "UTF-8")
         .config_header(HttpHeaderContentEncoding, "UTF-8");
-    response_builder.set_chunks(chunks_data);
+    response_builder.set_chunks(data_puffer_ptr);
     
     return response_builder;
 }
@@ -69,8 +69,7 @@ void HttpRequest::response(BytesBufferPtr data_to_send)
 
     PHTTP_REQUEST pReferenceRequest = reinterpret_cast<PHTTP_REQUEST>(_pmessage_buffer->data());
     DWORD bytesSent;
-    CHUNKS_DATA chunks_data = get_chunks(data_to_send);
-    HttpResponseBuilder reponse_builder = build_response(chunks_data);
+    HttpResponseBuilder reponse_builder = build_response(data_to_send);
     
     DWORD result = HttpSendHttpResponse(
         _h_request_queue_handle_context,
