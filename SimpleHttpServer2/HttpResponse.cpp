@@ -47,12 +47,6 @@ void HttpResponseBuilder::set_chunks(const BytesBufferPtr data_buffer)
 }
 
 
-//void HttpResponseBuilder::set_chunks(const CHUNKS_DATA& chunks_data)
-//{
-//	_response.EntityChunkCount = chunks_data.number_of_chunks;
-//	_response.pEntityChunks = chunks_data.chunks_array_ptr->data();
-//}
-
 HTTP_RESPONSE* HttpResponseBuilder::get()
 {
 	return &_response;

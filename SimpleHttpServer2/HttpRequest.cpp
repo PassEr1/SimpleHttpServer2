@@ -14,38 +14,6 @@ HttpRequest::~HttpRequest()
 {
 }
 
-unsigned long HttpRequest::calculate_num_of_chunks(const BytesBufferPtr data_buffer)
-{
-    return ceil((double)data_buffer->size() / HttpRequest::_defult_size_for_message); //round up
-}
-
-// CR: I think that if you moved the responsibility of making chunks and stuff into HttpResponse,
-// you wont need the HttpMessageChunks struct and the code will be encapsulated better
-CHUNKS_DATA HttpRequest::get_chunks(const BytesBufferPtr data_buffer)
-{
-    THROW_IF_NOT(data_buffer->size() != 0);
-
-    CHUNKS_DATA::HttpDataChunkArray chunks;
-    unsigned long number_of_chunks = calculate_num_of_chunks(data_buffer);
-    unsigned long size_of_last_chunk = data_buffer->size() % HttpRequest::_defult_size_for_message;
-    char* offset_next_chunk = data_buffer->data();
-
-    for (size_t i = 0; i < number_of_chunks; i++, offset_next_chunk += HttpRequest::_defult_size_for_message)
-    {
-        HTTP_DATA_CHUNK new_data_chunk;
-        new_data_chunk.DataChunkType = HttpDataChunkFromMemory;
-        new_data_chunk.FromMemory.pBuffer = (PVOID)offset_next_chunk;
-        new_data_chunk.FromMemory.BufferLength = HttpRequest::_defult_size_for_message;
-        chunks.push_back(new_data_chunk);
-
-    }
-    //set last chunk's size
-    chunks[number_of_chunks - 1].FromMemory.BufferLength = size_of_last_chunk;
-
-    return CHUNKS_DATA{ 
-        std::make_shared<CHUNKS_DATA::HttpDataChunkArray>(chunks),
-        number_of_chunks };
-}
 
 HttpResponseBuilder HttpRequest::build_response(BytesBufferPtr data_puffer_ptr)
 {
